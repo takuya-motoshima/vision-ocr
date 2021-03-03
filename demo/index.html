@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
+  <title>Vision OCR Demo</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/pure-css-loader/dist/css-loader.css">
+  <link rel="stylesheet" type="text/css" href="styles/index.css">
+</head>
+<body>
+  <!-- begin::Conteiner -->
+  <div class="container">
+
+    <!-- begin::Header -->
+    <header>
+      <div class="title-bar py-3">
+        <h2 class="title">Google Cloud Vision OCR Demo</h2>
+        <div class="subtitle">Mask symbols and numbers on uploaded insurance card images.</div>
+      </div>
+    </header>
+    <!-- end::Header -->
+
+    <!-- begin::Panel -->
+    <div class="console-panel">
+      <div class="row">
+        <div class="col-12">
+          <div class="photo-section-container">
+            <div class="image-holder">
+              <canvas class="image" id="mainImg"></canvas>
+            </div>
+            <div class="image-control py-3 px-2">
+              <div class="image-strip">
+                <h6>Select sample image</h6>
+                <div class="strip-container-scrollable">
+                  <ul id="stripContainer" class="strip-container">
+                    <li action-select-image class="strip-item selected"><img src="images/1.jpg" title="1.jpg"></li>
+                    <li action-select-image class="strip-item"><img src="images/2.jpg" title="2.jpg"></li>
+                    <li action-select-image class="strip-item"><img src="images/3.png" title="3.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/3_30degree.png" title="3_30degree.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/4.png" title="4.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/5.png" title="5.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/6.png" title="6.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/7.png" title="7.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/8.png" title="8.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/9.png" title="9.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/10.png" title="10.png"></li>
+                    <li action-select-image class="strip-item"><img src="images/11.jpg" title="11.jpg"></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="vertical-border"></div>
+              <div class="image-uploader">
+                <h6>You'r image</h6>
+                <label>
+                  <span class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-upload mr-1"></i>Upload<input action-upload-image type="file" class="d-none" accept="image/*">
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end::Panel -->
+  </div>
+  <!-- end::Conteiner -->
+  <div id="loader" class="loader loader-default is-active" data-text></div>
+
+  <script src="node_modules/axios/dist/axios.min.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="scripts/index.js" type="module"></script>
+</body>
+</html>

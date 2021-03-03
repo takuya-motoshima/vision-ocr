@@ -1,0 +1,19 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Takuya Motoshima <developer.takuyamotoshima@gmail.com> (https://twitter.com/TakuyaMotoshima)",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bootstrap": "^4.5.2",
+    "graphicjs": "^1.0.2",
+    "jquery": "^3.5.1",
+    "pure-css-loader": "^3.3.3"
+  }
+}
