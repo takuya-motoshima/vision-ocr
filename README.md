@@ -1,6 +1,10 @@
 # vision-ocr
 
-This is a demo of OCR using Google Cloud Vision.
+This is a demo of OCR using Google Cloud Vision.  
+
+This package contains the following "demo/".  
+
+![demo.png](https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencap/demo.png)
 
 ## Reference
 
