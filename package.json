@@ -11,9 +11,25 @@
     "restart": "rm -rf detection_result/* && pm2 flush && pm2 restart ecosystem.config.js",
     "stop": "pm2 stop ecosystem.config.js"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takuya-motoshima/vision-ocr.git"
+  },
+  "keywords": [
+    "google-cloud",
+    "node",
+    "express",
+    "esm",
+    "es6",
+    "demo"
+  ],
   "author": "Takuya Motoshima <developer.takuyamotoshima@gmail.com> (https://twitter.com/TakuyaMotoshima)",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/takuya-motoshima/vision-ocr/issues",
+    "email": "developer.takuyamotoshima@gmail.com"
+  },
+  "homepage": "https://github.com/takuya-motoshima/vision-ocr#readme",
   "dependencies": {
     "@google-cloud/vision": "^2.1.1",
     "body-parser": "^1.19.0",
