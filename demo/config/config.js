@@ -1,1 +1,0 @@
-export const baseUrl = 'https://ocr.newopeninnovation.com/api';
