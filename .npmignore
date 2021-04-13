@@ -2,5 +2,5 @@ node_modules/
 package-lock.json
 credentials.json
 !credentials.json.sample
-demo/config/config.js
-!demo/config/config.js.sample
+demo/config.js
+!demo/config.js.sample

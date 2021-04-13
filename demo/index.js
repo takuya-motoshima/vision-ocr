@@ -1,5 +1,5 @@
-import graphicjs from '../node_modules/graphicjs/dist/build.esm.js';
-import * as config from '../config/config.js';
+import graphicjs from './node_modules/graphicjs/dist/build.esm.js';
+import * as config from './config.js';
 
 /**
  * Initialize preview image.
@@ -9,7 +9,7 @@ function initPreviewImg() {
   $('#stripContainer > .strip-item:first-child').addClass('selected');
 
   // Show in main image when image list is selected
-  $('[action-select-image]').on('click', async event => {
+  $('[action-select-img]').on('click', async event => {
     const img = $(event.currentTarget).find('img');
     const menu = img.parent();
     const selectedMenu = $('#stripContainer .selected');
@@ -21,7 +21,7 @@ function initPreviewImg() {
   });
 
   // Mask the uploaded image
-  $('[action-upload-image]').on('change', async event => {
+  $('[action-upload-img]').on('change', async event => {
     const target = $(event.currentTarget);
     if (!target.get(0).files.length) return;
     const base64 = await new Promise(resolve => {
@@ -59,7 +59,7 @@ async function ocr(base64) {
   loader.show();
 
   // Send mask request.
-  const { data } = await instance.post('ocr', {image: base64});
+  const { data } = await request.post('ocr', {image: base64});
   console.log(`Result: ${data.slice(0, 30)}`);
 
   // Show masked image.
@@ -74,10 +74,7 @@ async function ocr(base64) {
 const mainImg = $('#mainImg');
 
 // Create a new instance of axios.
-const instance = axios.create({
-  baseURL: config.baseUrl,
-  timeout: 5000
-});
+const request = axios.create({baseURL: config.baseUrl, timeout: 5000});
 
 // Loader.
 const loader = $('#loader');

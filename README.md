@@ -37,7 +37,7 @@ npm run start;
 ## Examples
 
 There is a demo application in [./demo](./demo) of this package.  
-Copy [./demo/config/config.js.sample](./demo/config/config.js.sample) to ./demo/config/config.js and set the baseUrl of config.js to the base URL of the API you built.  
+Copy [./demo/config.js.sample](./demo/config.js.sample) to ./demo/config.js and set the baseUrl of config.js to the base URL of the API you built.  
 
 You can test OCR as soon as you open the demo in your browser.  
 
