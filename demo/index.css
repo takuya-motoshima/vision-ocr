@@ -5,24 +5,19 @@
   --list-img-height-sm: calc(var(--list-img-width-sm) * 5 / 8);
 }
 
+html,
+body {
+  height: 100%;
+}
+
 html {
   font-family: HelveticaNeue-Light, "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", "TeXGyreHerosRegular", Helvetica, Tahoma, Geneva, Arial, sans-serif;
   font-size: 12px;
-  letter-spacing: 0.3px;
 }
 
 body {
-  overflow: hidden;
-  height: 100%;
-  min-height: 100vh;
   background: #000;
   color: #fff;
-}
-
-@media (max-width: 767.98px) {
-  body {
-    overflow: auto !important;
-  }
 }
 
 ::-webkit-scrollbar {
@@ -93,11 +88,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 12px;
   }
 
-.console-panel {
-  position: relative;
-}
-
-  .img-holder {
+  .holder {
     position: relative;
     margin: 0 auto;
     max-width: 100%;
@@ -107,28 +98,28 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px, rgba(0, 0, 0, 0.4) 0px 3px 5px -1px;
   }
 
-    .img {
+    .canvas {
       object-fit: contain;
       width: 100%;
       height: 100%;
     }
 
-.img-control {
+.tools {
   display: flex;
   justify-content: space-between;
   max-width: 100%;
 }
 
-  .img-strip {
+  .img-list-conteiner {
     flex: 1;
     overflow: hidden;
   }
 
-    .strip-container-scrollable {
+    .img-list-scrollable {
       overflow-x: auto;
     }
 
-      .strip-container {
+      .img-list {
         display: flex;
         flex-direction: row;
         margin-bottom: 0;
@@ -137,7 +128,7 @@ h1, h2, h3, h4, h5, h6 {
         list-style: none;
       }
 
-        .strip-item {
+        .img-list-item {
           margin: 10px 5px;
           padding: 0;
           width: var(--list-img-width);
@@ -146,27 +137,27 @@ h1, h2, h3, h4, h5, h6 {
         }
 
         @media (max-width: 767.98px) {
-          .strip-item {
+          .img-list-item {
             width: var(--list-img-width-sm);
             height: var(--list-img-height-sm);
           }
         }
 
-        .strip-item.selected {
+        .img-list-item.selected {
           border: 3px solid #3388DD !important;
         }
 
-          .strip-item img {
+          .img-list-item img {
             width: 100%;
             height: 100%;
             object-fit: contain;
           }
 
-          [theme='dark'] .strip-item img {
+          [theme='dark'] .img-list-item img {
             border-color: #424245;
           }
 
-          .strip-item.selected img {
+          .img-list-item.selected img {
             border: 2px solid #ffffff;
           }
 

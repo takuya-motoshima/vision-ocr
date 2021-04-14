@@ -9,63 +9,48 @@
   <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-  <!-- begin::Conteiner -->
   <div class="container">
-
-    <!-- begin::Header -->
     <header>
       <div class="title-bar py-3">
-        <h2 class="title">OCR Demo</h2>
-        <div class="subtitle">Mask symbols and numbers on uploaded insurance card images.</div>
+        <h2 class="title">Vision OCR Demo</h2>
       </div>
     </header>
-    <!-- end::Header -->
-
-    <!-- begin::Panel -->
-    <div class="console-panel">
-      <div class="row">
-        <div class="col-12">
-          <div class="photo-section-container">
-            <div class="img-holder">
-              <canvas class="img" id="mainImg"></canvas>
+    <div class="row">
+      <div class="col-12">
+        <div class="holder">
+          <canvas class="canvas" id="canvas"></canvas>
+        </div>
+        <div class="tools py-3 px-2">
+          <div class="img-list-conteiner">
+            <h6>Select sample image</h6>
+            <div class="img-list-scrollable">
+              <ul id="imgs" class="img-list">
+                <li on-select class="img-list-item selected"><img src="images/1.jpg" title="1.jpg"></li>
+                <li on-select class="img-list-item"><img src="images/2.jpg" title="2.jpg"></li>
+                <li on-select class="img-list-item"><img src="images/3.png" title="3.png"></li>
+                <li on-select class="img-list-item"><img src="images/3_30degree.png" title="3_30degree.png"></li>
+                <li on-select class="img-list-item"><img src="images/4.png" title="4.png"></li>
+                <li on-select class="img-list-item"><img src="images/5.png" title="5.png"></li>
+                <li on-select class="img-list-item"><img src="images/6.png" title="6.png"></li>
+                <li on-select class="img-list-item"><img src="images/7.png" title="7.png"></li>
+                <li on-select class="img-list-item"><img src="images/8.png" title="8.png"></li>
+                <li on-select class="img-list-item"><img src="images/9.png" title="9.png"></li>
+                <li on-select class="img-list-item"><img src="images/10.png" title="10.png"></li>
+                <li on-select class="img-list-item"><img src="images/11.jpg" title="11.jpg"></li>
+              </ul>
             </div>
-            <div class="img-control py-3 px-2">
-              <div class="img-strip">
-                <h6>Select sample image</h6>
-                <div class="strip-container-scrollable">
-                  <ul id="stripContainer" class="strip-container">
-                    <li action-select-img class="strip-item selected"><img src="images/1.jpg" title="1.jpg"></li>
-                    <li action-select-img class="strip-item"><img src="images/2.jpg" title="2.jpg"></li>
-                    <li action-select-img class="strip-item"><img src="images/3.png" title="3.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/3_30degree.png" title="3_30degree.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/4.png" title="4.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/5.png" title="5.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/6.png" title="6.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/7.png" title="7.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/8.png" title="8.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/9.png" title="9.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/10.png" title="10.png"></li>
-                    <li action-select-img class="strip-item"><img src="images/11.jpg" title="11.jpg"></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="vertical-border"></div>
-              <div class="img-uploader">
-                <h6>You'r image</h6>
-                <label>
-                  <span class="btn btn-primary btn-lg">
-                    <i class="fas fa-upload mr-1"></i>Upload<input action-upload-img type="file" class="d-none" accept="image/*">
-                  </span>
-                </label>
-              </div>
-            </div>
+          </div>
+          <div class="vertical-border"></div>
+          <div>
+            <h6>You'r image</h6>
+            <label>
+              <span class="btn btn-primary"><i class="fas fa-upload mr-1"></i>Upload<input on-upload type="file" class="d-none" accept="image/*"></span>
+            </label>
           </div>
         </div>
       </div>
     </div>
-    <!-- end::Panel -->
   </div>
-  <!-- end::Conteiner -->
   <div id="loader" class="loader loader-default is-active" data-text></div>
 
   <script src="node_modules/axios/dist/axios.min.js"></script>

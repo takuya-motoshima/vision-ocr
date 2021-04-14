@@ -1,11 +1,11 @@
 import express from 'express';
-import api from '~/api/visionApi';
+import VisionOCR from '~/shared/VisionOCR';
 
 const router = express.Router();
+
 router.post('/', async (req, res, next) => {
   try {
-    const base64 = await api.maskInsuranceCard(req.body.image);
-    res.json(base64);
+    res.json(await VisionOCR.scan({img: req.body.img}));
   } catch (e) {
     next(e);
   }
