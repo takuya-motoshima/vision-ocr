@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
-  <title>Vision OCR Demo</title>
+  <title>Vision Demo</title>
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="node_modules/pure-css-loader/dist/css-loader.css">
   <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <header>
       <div class="title-bar py-3">
-        <h2 class="title">Vision OCR Demo</h2>
+        <h2 class="title">Vision Demo</h2>
       </div>
     </header>
     <div class="row">
-      <div class="col-12">
+      <div class="col-7">
         <div class="holder">
           <canvas class="canvas" id="canvas"></canvas>
         </div>
@@ -25,18 +25,18 @@
             <h6>Select sample image</h6>
             <div class="img-list-scrollable">
               <ul id="imgs" class="img-list">
-                <li on-select class="img-list-item selected"><img src="images/1.jpg" title="1.jpg"></li>
-                <li on-select class="img-list-item"><img src="images/2.jpg" title="2.jpg"></li>
-                <li on-select class="img-list-item"><img src="images/3.png" title="3.png"></li>
-                <li on-select class="img-list-item"><img src="images/3_30degree.png" title="3_30degree.png"></li>
-                <li on-select class="img-list-item"><img src="images/4.png" title="4.png"></li>
-                <li on-select class="img-list-item"><img src="images/5.png" title="5.png"></li>
-                <li on-select class="img-list-item"><img src="images/6.png" title="6.png"></li>
-                <li on-select class="img-list-item"><img src="images/7.png" title="7.png"></li>
-                <li on-select class="img-list-item"><img src="images/8.png" title="8.png"></li>
-                <li on-select class="img-list-item"><img src="images/9.png" title="9.png"></li>
-                <li on-select class="img-list-item"><img src="images/10.png" title="10.png"></li>
-                <li on-select class="img-list-item"><img src="images/11.jpg" title="11.jpg"></li>
+                <li on-select class="img active"><img src="images/insurance/1.jpg" title="1.jpg"></li>
+                <li on-select class="img"><img src="images/insurance/2.jpg" title="2.jpg"></li>
+                <li on-select class="img"><img src="images/insurance/3.png" title="3.png"></li>
+                <li on-select class="img"><img src="images/insurance/3_30degree.png" title="3_30degree.png"></li>
+                <li on-select class="img"><img src="images/insurance/4.png" title="4.png"></li>
+                <li on-select class="img"><img src="images/insurance/5.png" title="5.png"></li>
+                <li on-select class="img"><img src="images/insurance/6.png" title="6.png"></li>
+                <li on-select class="img"><img src="images/insurance/7.png" title="7.png"></li>
+                <li on-select class="img"><img src="images/insurance/8.png" title="8.png"></li>
+                <li on-select class="img"><img src="images/insurance/9.png" title="9.png"></li>
+                <li on-select class="img"><img src="images/insurance/10.png" title="10.png"></li>
+                <li on-select class="img"><img src="images/insurance/11.jpg" title="11.jpg"></li>
               </ul>
             </div>
           </div>
@@ -49,10 +49,11 @@
           </div>
         </div>
       </div>
+      <div class="col-5">
+      </div>
     </div>
   </div>
   <div id="loader" class="loader loader-default is-active" data-text></div>
-
   <script src="node_modules/axios/dist/axios.min.js"></script>
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="index.js" type="module"></script>

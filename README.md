@@ -2,11 +2,12 @@
 
 This is an OCR demo application using Google Cloud Vision.  
 
-<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencap/demo.png" width="600">
+<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencaps/demo.png" width="600">
 
 ## Reference
 
 - [Documentation | Google Cloud](https://cloud.google.com/docs?hl=ja)
+- [OCR your driver's license](https://qiita.com/shoku-pan/items/39747eddcf2bc19b48d7)
 
 ## Getting Started
 
@@ -18,10 +19,10 @@ git clone https://github.com/takuya-motoshima/vision-ocr.git;
 ```
 
 Build an OCR API WEB server.  
-If you are using Nginx, change the server_name in the configuration file [./documents/vision-ocr.conf](./documents/vision-ocr.conf) and copy it to "/etc/nginx/conf.d/" and restart Nginx.  
+If you are using Nginx, change the server_name in the configuration file [./nginx.conf](./nginx.conf) and copy it to "/etc/nginx/conf.d/" and restart Nginx.  
 
 ```sh
-sudo cp -a ./documents/vision-ocr.conf /etc/nginx/conf.d/;
+sudo cp -a ./nginx.conf /etc/nginx/conf.d/example.conf;
 sudo systemctl restart nginx;
 ```
 

@@ -4,17 +4,12 @@ module.exports = {
   apps : [
     {
       name: 'vision-ocr',
-      script: 'bin/www.js',
+      script: 'bin/www',
       node_args: '-r esm',
       exec_mode: 'cluster_mode',
       watch: '.',
       watch_delay: 1000,
-      ignore_watch : [
-        'node_modules',
-        'examples',
-        '.git',
-        'result'
-      ],
+      ignore_watch : ['.git', 'demo', 'node_modules', 'screencaps'],
       watch_options: {
         followSymlinks: false,
         usePolling: true

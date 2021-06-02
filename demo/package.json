@@ -1,5 +1,5 @@
 {
-  "name": "examples",
+  "name": "demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,9 +11,9 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^5.0.1",
     "graphicjs": "^1.0.2",
-    "jquery": "^3.5.1",
+    "jquery": "^3.6.0",
     "pure-css-loader": "^3.3.3"
   }
 }
