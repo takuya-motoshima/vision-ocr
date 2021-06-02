@@ -64,20 +64,6 @@ h1, h2, h3, h4, h5, h6 {
   border-right: 1px solid #dadada;
 }
 
-.title-bar {
-  letter-spacing: 0.3px;
-}
-
-  .title-bar .title {
-    line-height: 31px;
-    margin-bottom: 7px;
-  }
-
-  .title-bar .subtitle {
-    line-height: 21px;
-    margin-bottom: 12px;
-  }
-
   .holder {
     position: relative;
     margin: 0 auto;

@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
-  <title>Vision Demo</title>
+  <title>Analyze your insurance card or driver's license.</title>
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
   <link rel="stylesheet" href="node_modules/pure-css-loader/dist/css-loader.css">
   <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-  <div class="container-fluid">
-    <header>
-      <div class="title-bar py-3">
-        <h2 class="title">Vision Demo</h2>
-      </div>
-    </header>
+  <div class="container-fluid my-md-4">
+    <h1>Analyze your insurance card or driver's license.</h1>
+    <p style="font-size: calc(1.275rem + .3vw); font-weight: 300;">This is a demonstration of performing insurance card number masks, driver's license number check digits, etc. with Google Vision.</p>
     <div class="row">
       <div class="col-7">
         <div class="holder">
@@ -25,18 +23,27 @@
             <h6>Select sample image</h6>
             <div class="img-list-scrollable">
               <ul id="imgs" class="img-list">
-                <li on-select class="img active"><img src="images/insurance/1.jpg" title="1.jpg"></li>
-                <li on-select class="img"><img src="images/insurance/2.jpg" title="2.jpg"></li>
-                <li on-select class="img"><img src="images/insurance/3.png" title="3.png"></li>
-                <li on-select class="img"><img src="images/insurance/3_30degree.png" title="3_30degree.png"></li>
-                <li on-select class="img"><img src="images/insurance/4.png" title="4.png"></li>
-                <li on-select class="img"><img src="images/insurance/5.png" title="5.png"></li>
-                <li on-select class="img"><img src="images/insurance/6.png" title="6.png"></li>
-                <li on-select class="img"><img src="images/insurance/7.png" title="7.png"></li>
-                <li on-select class="img"><img src="images/insurance/8.png" title="8.png"></li>
-                <li on-select class="img"><img src="images/insurance/9.png" title="9.png"></li>
-                <li on-select class="img"><img src="images/insurance/10.png" title="10.png"></li>
-                <li on-select class="img"><img src="images/insurance/11.jpg" title="11.jpg"></li>
+                <li on-select class="img active"><img src="images/license1.jpg"></li>
+                <li on-select class="img"><img src="images/license1_15degree.jpg"></li>
+                <li on-select class="img"><img src="images/license1_30degree.jpg"></li>
+                <li on-select class="img"><img src="images/license1_45degree.jpg"></li>
+                <li on-select class="img"><img src="images/license2.jpg"></li>
+                <li on-select class="img"><img src="images/license3.jpg"></li>
+                <li on-select class="img"><img src="images/license4.jpg"></li>
+                <li on-select class="img"><img src="images/license5.jpg"></li>
+                <li on-select class="img"><img src="images/license6.jpg"></li>
+                <!-- <li on-select class="img active"><img src="images/insurance1.jpg"></li>
+                <li on-select class="img"><img src="images/insurance2.jpg"></li>
+                <li on-select class="img"><img src="images/insurance3.jpg"></li>
+                <li on-select class="img"><img src="images/insurance3_30degree.jpg"></li>
+                <li on-select class="img"><img src="images/insurance4.jpg"></li>
+                <li on-select class="img"><img src="images/insurance5.jpg"></li>
+                <li on-select class="img"><img src="images/insurance6.jpg"></li>
+                <li on-select class="img"><img src="images/insurance7.jpg"></li>
+                <li on-select class="img"><img src="images/insurance8.jpg"></li>
+                <li on-select class="img"><img src="images/insurance9.jpg"></li>
+                <li on-select class="img"><img src="images/insurance10.jpg"></li>
+                <li on-select class="img"><img src="images/insurance11.jpg"></li> -->
               </ul>
             </div>
           </div>
@@ -44,7 +51,9 @@
           <div>
             <h6>You'r image</h6>
             <label>
-              <span class="btn btn-primary"><i class="fas fa-upload mr-1"></i>Upload<input on-upload type="file" class="d-none" accept="image/*"></span>
+              <span class="btn btn-primary">
+                <i class="bi-upload"></i>Upload<input on-upload type="file" class="d-none" accept="image/*">
+              </span>
             </label>
           </div>
         </div>
