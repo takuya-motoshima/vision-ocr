@@ -9,7 +9,13 @@ module.exports = {
       exec_mode: 'cluster_mode',
       watch: '.',
       watch_delay: 1000,
-      ignore_watch : ['.git', 'demo', 'node_modules', 'screencaps'],
+      ignore_watch : [
+        '.git',
+        'demo',
+        'node_modules',
+        'output',
+        'screencaps'
+      ],
       watch_options: {
         followSymlinks: false,
         usePolling: true

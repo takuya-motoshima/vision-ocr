@@ -19,16 +19,21 @@ import * as config from './config.js';
    * Request a health insurance card mask.
    */
   async function sendInsuranceCard() {
-    loader.show();
-    const {data} = await request.post('ocr', {
-      img: canvas.get(0).toDataURL('image/png', 1.),
-      type: 'MASK_INSURANCE_CARD'
-    });
-    const img = new Image();
-    img.src = data;
-    await graphicjs.awaitMediaLoaded(img);
-    drawCanvas(img);
-    loader.hide();
+    try {
+      loader.show();
+      const img = await getActiveImg();
+      const dataUrl = toDataURL(img);
+      const {data} = await request.post('ocr', {img: dataUrl, type: 'MASK_INSURANCE_CARD'});
+      const newImg = new Image();
+      newImg.src = data;
+      await graphicjs.awaitMediaLoaded(newImg);
+      drawCanvas(newImg);
+    } catch(e) {
+      alert('An unexpected error has occurred');
+      throw e;
+    } finally {
+      loader.hide();
+    }
   }
 
   /**
@@ -36,31 +41,47 @@ import * as config from './config.js';
    */
   async function sendDriversLicense() {
     loader.show();
-    const res= await request.post('ocr', {
-      img: canvas.get(0).toDataURL('image/png', 1.),
-      type: 'CHECK_LICENSE_NUMBER'
-    });
-    console.log('res=', res);
+    const res= await request.post('ocr', {img: canvas.get(0).toDataURL('image/png', 1.), type: 'CHECK_LICENSE_NUMBER'});
     loader.hide();
+  }
+
+  /**
+   * Returns the currently active image.
+   */
+  async function getActiveImg() {
+    const img = imgs.find('.active:first img').get(0);
+    if (!img.complete)
+      await new Promise(resolve => $(img).on('load', resolve));
+    return img;
+  }
+
+  /**
+   * Convert images to data URLs.
+   */
+  function toDataURL(img) {
+    const canvas = document.createElement('canvas');
+    canvas.height = img.naturalHeight;
+    canvas.width = img.naturalWidth;
+    canvas.getContext('2d').drawImage(img, 0, 0);
+    const extension = img.src.substr(img.src.lastIndexOf('.') + 1);
+    return canvas.toDataURL(`image/${extension}`, 1.);
   }
 
   const canvas = $('#canvas');
   const loader = $('#loader');
   const imgs = $('#imgs');
   const request = axios.create({baseURL: config.baseUrl, timeout: 5000});
+  const result = $('#result');
+  const types = $('[type="radio"][name="type"]');
 
   // Image list selection event.
-  $('[on-select]').on('click', async event => {
-    const acitveImg = $(event.currentTarget).find('img');
-    const parent = acitveImg.parent();
-    const activeImg = imgs.find('.active:first');
-    console.log('activeImg=', activeImg);
-    if (parent.get(0) === activeImg.get(0)) return;
-    activeImg.removeClass('active');
-    parent.addClass('active');
-    drawCanvas(acitveImg.get(0));
-    sendDriversLicense();
-    // sendInsuranceCard();
+  imgs.on('click', 'li:not(.active)', async event => {
+    imgs.find('li.active').removeClass('active');
+    const li = $(event.currentTarget).addClass('active');
+    const img = li.find('img:first');
+    drawCanvas(img.get(0));
+    if (types.filter(':checked').val() === 'MASK_INSURANCE_CARD') sendInsuranceCard();
+    else sendDriversLicense();
   });
 
   // Image upload event.
@@ -79,17 +100,26 @@ import * as config from './config.js';
     if (!img.complete)
       await new Promise(resolve => $(img).on('load', resolve));
     drawCanvas(img);
-    sendDriversLicense();
-    // sendInsuranceCard();
+    if (types.filter(':checked').val() === 'MASK_INSURANCE_CARD') sendInsuranceCard();
+    else sendDriversLicense();
+  });
+
+  /**
+   * Change type.
+   */
+  types.on('change', event => {
+    const type = $(event.currentTarget).val();
   });
 
   // Draw the first image on the canvas.
-  const acitveImg = imgs.find('.active:first img').get(0);
-  if (!acitveImg.complete)
-    await new Promise(resolve => $(acitveImg).on('load', resolve));
-  drawCanvas(acitveImg);
+  drawCanvas(await getActiveImg());
 
   // Request a health insurance card mask.
-  sendDriversLicense();
-  // sendInsuranceCard();
+  if (types.filter(':checked').val() === 'MASK_INSURANCE_CARD') sendInsuranceCard();
+  else sendDriversLicense();
+
+  hljs.highlightBlock(result.get(0));
+
+
+globalThis.loader = loader;
 })();

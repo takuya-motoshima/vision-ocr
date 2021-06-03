@@ -9,7 +9,7 @@ html, body {
 
 html {
   font-family: HelveticaNeue-Light, "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", "TeXGyreHerosRegular", Helvetica, Tahoma, Geneva, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 ::-webkit-scrollbar {
@@ -55,7 +55,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .loader, .loader::before, .loader::after {
-  position: absolute !important;
+  position: fixed !important;
 }
 
 .vertical-border {
@@ -104,7 +104,7 @@ h1, h2, h3, h4, h5, h6 {
         list-style: none;
       }
 
-        .img {
+        .img-list li {
           margin: 10px 5px;
           padding: 0;
           width: var(--list-img-width);
@@ -112,16 +112,16 @@ h1, h2, h3, h4, h5, h6 {
           cursor: pointer;
         }
 
-        .img.active {
+        .img-list li.active {
           border: 3px solid #3388DD !important;
         }
 
-          .img img {
+          .img-list li img {
             width: 100%;
             height: 100%;
             object-fit: contain;
           }
 
-          .img.active img {
+          .img-list li.active img {
             border: 2px solid #ffffff;
           }

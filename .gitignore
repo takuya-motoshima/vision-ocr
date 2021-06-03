@@ -4,3 +4,5 @@ credentials.json
 !credentials.json.sample
 demo/config.js
 !demo/config.js.sample
+!output
+output/*
