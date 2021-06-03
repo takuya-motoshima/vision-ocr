@@ -6,13 +6,7 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
   try {
     const client = new GoogleVisionClient(File.readAsJson('credentials.json'));
-    let result;
-    if (req.body.type === 'MASK_INSURANCE_CARD')
-      result = await client.maskInsuranceCard(req.body.img);
-    else if (req.body.type === 'CHECK_LICENSE_NUMBER')
-      result = await client.checkLicenseNumber(req.body.img);
-    else
-      new Error('The type parameter is invalid');
+    const result = await client.maskInsuranceCard(req.body.img);
     res.json(result);
   } catch (e) {
     console.error(e.message);

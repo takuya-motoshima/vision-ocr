@@ -16,33 +16,31 @@ import * as config from './config.js';
   }
 
   /**
-   * Request a health insurance card mask.
+   * Send image analysis request.
    */
-  async function sendInsuranceCard() {
+  async function send(img) {
     try {
       loader.show();
-      const img = await getActiveImg();
-      const dataUrl = toDataURL(img);
-      const {data} = await request.post('ocr', {img: dataUrl, type: 'MASK_INSURANCE_CARD'});
-      const newImg = new Image();
-      newImg.src = data;
-      await graphicjs.awaitMediaLoaded(newImg);
-      drawCanvas(newImg);
+      if (types.filter(':checked').val() === 'MASK_INSURANCE_CARD') {
+        // Request a health insurance card mask.
+        const {data} = await request.post('maskInsuranceCard', {img: toDataURL(img)});
+        const newImg = new Image();
+        newImg.src = data;
+        await graphicjs.awaitMediaLoaded(newImg);
+        drawCanvas(newImg);
+      } else {
+        // Request verification of license number.
+        const {data}= await request.post('checkLicenceNumber', {img: toDataURL(img)});
+        console.log('data=', data);
+        result.text(JSON.stringify(data, null, 2));
+        hljs.highlightBlock(result.get(0));
+      }
     } catch(e) {
       alert('An unexpected error has occurred');
       throw e;
     } finally {
       loader.hide();
     }
-  }
-
-  /**
-   * Request verification of license number.
-   */
-  async function sendDriversLicense() {
-    loader.show();
-    const res= await request.post('ocr', {img: canvas.get(0).toDataURL('image/png', 1.), type: 'CHECK_LICENSE_NUMBER'});
-    loader.hide();
   }
 
   /**
@@ -78,17 +76,15 @@ import * as config from './config.js';
   imgs.on('click', 'li:not(.active)', async event => {
     imgs.find('li.active').removeClass('active');
     const li = $(event.currentTarget).addClass('active');
-    const img = li.find('img:first');
-    drawCanvas(img.get(0));
-    if (types.filter(':checked').val() === 'MASK_INSURANCE_CARD') sendInsuranceCard();
-    else sendDriversLicense();
+    const img = li.find('img:first').get(0);
+    drawCanvas(img);
+    send(img);
   });
 
   // Image upload event.
   $('[on-upload]').on('change', async event => {
     const inputFile = $(event.currentTarget);
-    if (!inputFile.get(0).files.length)
-      return;
+    if (!inputFile.get(0).files.length) return;
     const dataUrl = await new Promise(resolve => {
       const reader = new FileReader();
       reader.readAsDataURL(inputFile.get(0).files[0]);
@@ -100,26 +96,53 @@ import * as config from './config.js';
     if (!img.complete)
       await new Promise(resolve => $(img).on('load', resolve));
     drawCanvas(img);
-    if (types.filter(':checked').val() === 'MASK_INSURANCE_CARD') sendInsuranceCard();
-    else sendDriversLicense();
+    send(img);
   });
 
-  /**
-   * Change type.
-   */
-  types.on('change', event => {
+  // Change type.
+  types.on('change', async event => {
     const type = $(event.currentTarget).val();
+
+    // Save the type entered in the browser.
+    Cookies.set('type', type);
+
+    // Turn off the currently active item.
+    imgs.children('li.active:first').removeClass('active');
+
+    // Activates the first item of the currently selected type.
+    if (type === 'MASK_INSURANCE_CARD') {
+      imgs.attr('type', 'insurance');
+      imgs.children('li.insurance:first').addClass('active');
+    } else {
+      imgs.attr('type', 'license');
+      imgs.children('li.license:first').addClass('active');
+    }
+
+    // Draw the first image on the canvas.
+    const img = await getActiveImg();
+    drawCanvas(img);
+
+    // Send image analysis request.
+    send(img);
   });
+
+  // Shows previously entered type information.
+  if (Cookies.get('type') !== types.filter(':checked').val()) {
+    types.filter(`[value="${Cookies.get('type')}"]:first`).prop('checked', true);
+    imgs.children('li.active:first').removeClass('active');
+    if (Cookies.get('type') === 'MASK_INSURANCE_CARD') {
+      imgs.attr('type', 'insurance');
+      imgs.children('li.insurance:first').addClass('active');
+    } else {
+      imgs.attr('type', 'license');
+      imgs.children('li.license:first').addClass('active');
+    }
+  }
 
   // Draw the first image on the canvas.
-  drawCanvas(await getActiveImg());
+  const img = await getActiveImg();
+  drawCanvas(img);
 
   // Request a health insurance card mask.
-  if (types.filter(':checked').val() === 'MASK_INSURANCE_CARD') sendInsuranceCard();
-  else sendDriversLicense();
-
-  hljs.highlightBlock(result.get(0));
-
-
-globalThis.loader = loader;
+  send(img);
 })();

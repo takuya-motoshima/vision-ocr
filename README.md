@@ -2,12 +2,11 @@
 
 This is an OCR demo application using Google Cloud Vision.  
 
-<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencaps/demo.png" width="600">
+Insurance card number mask demo:  
+<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencaps/drivers-license.png" width="500">
 
-## Reference
-
-- [Documentation | Google Cloud](https://cloud.google.com/docs?hl=ja)
-- [OCR your driver's license](https://qiita.com/shoku-pan/items/39747eddcf2bc19b48d7)
+Driver's license number check demo:  
+<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencaps/health-insurance-card.png" width="500">
 
 ## Getting Started
 
@@ -43,6 +42,12 @@ Copy [./demo/config.js.sample](./demo/config.js.sample) to ./demo/config.js and 
 You can test OCR as soon as you open the demo in your browser.  
 
 https://<Your host name\>/demo
+
+
+## Reference
+
+- [Documentation | Google Cloud](https://cloud.google.com/docs?hl=ja)
+- [OCR your driver's license](https://qiita.com/shoku-pan/items/39747eddcf2bc19b48d7)
 
 ## License
 

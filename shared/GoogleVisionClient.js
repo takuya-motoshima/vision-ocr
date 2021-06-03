@@ -60,8 +60,9 @@ export default class {
    */
   async detectInsurerNumber(imgPath, detections) {
     const [result] = await this.client.textDetection(imgPath);
-    File.write(`${global.APP_DIR}/output/${moment().format('YYYYMMDDHHmmss')}_text-detection.json`, JSON.stringify(result, null, 2));
-    if (!result.textAnnotations.length) return;
+    if (!result.textAnnotations.length)
+      return;
+    this.outputResult('insurer', result.textAnnotations);
     const annotations = result.textAnnotations.slice(1) || [];
     for (let [i, annotation] of Object.entries(annotations)) {
       const {description, boundingPoly} = annotation;
@@ -80,7 +81,8 @@ export default class {
    */
   async detectInsurerQrCode(imgPath, imgWidth, imgHeight, detections) {
     const [result] = await this.client.objectLocalization(imgPath);
-    if (!result.localizedObjectAnnotations.length) return;
+    if (!result.localizedObjectAnnotations.length)
+      return;
     const object = result.localizedObjectAnnotations.find(object => object.name === '2D barcode');
     if (!object || object.score < .8) return;
     for (let vertex of object.boundingPoly.normalizedVertices) {
@@ -136,11 +138,58 @@ export default class {
     const tmpImg = await loadImage(tmpPath);
 
     // Analyze the document.
-    const now = moment().format('YYYYMMDDHHmmss');
-    const textDetection = await this.client.textDetection(tmpPath);
-    const documentDetection = await this.client.documentTextDetection(tmpPath);
-    File.write(`${global.APP_DIR}/output/${now}_text-detection.json`, JSON.stringify(textDetection, null, 2));
-    File.write(`${global.APP_DIR}/output/${now}_document-detection.json`, JSON.stringify(documentDetection, null, 2));
-    return true;
+    const [result] = await this.client.documentTextDetection(tmpPath);
+    this.outputResult('license', result.textAnnotations);
+
+    // Check your license number.
+    let isDriversLicense = false;
+    let driversLicenseNumber = null;
+    let boundingBox = null;
+    let checkDigitResult = false;
+    if (result.textAnnotations.length) {
+      isDriversLicense = result.textAnnotations[0].description.indexOf('免許証') !== -1;
+      // isDriversLicense = result.textAnnotations[0].description.indexOf('運転免許証') !== -1;
+      if (isDriversLicense) {
+        const annotations = result.textAnnotations.slice(1) || [];
+        for (let {description, boundingPoly} of annotations) {
+          const matches = /\d{12}/.exec(description);
+          if (!matches) continue;
+          driversLicenseNumber = matches[0];
+
+          // Calculate the license number check digit.
+          const digit = this.calcLicenseNumberCheckDigit(driversLicenseNumber);
+          checkDigitResult = driversLicenseNumber.toString().slice(10, 11) == digit;
+
+          // License number bounding box.
+          const [leftTop, rightTop, rightBottom, leftBottom] = boundingPoly.vertices;
+          boundingBox = {leftTop, rightTop, rightBottom, leftBottom};
+          break;
+        }
+      }
+    }
+    return {isDriversLicense, driversLicenseNumber, checkDigitResult, boundingBox};
+  }
+
+  /**
+   * Calculate license number check digit.
+   */
+  calcLicenseNumberCheckDigit(number) {
+    const weight = [2,3,4,5,6,7,2,3,4,5,6];
+    let base = parseInt(number.toString().slice(0, 10), 10);
+    let sum = 0;
+    for (let i=0; i<10; i++) {
+      sum += base % 10 * weight[i];
+      base = Math.floor(base / 10);
+    }
+    const digit = (11 - (sum % 11)) % 10;
+    return digit
+  }
+
+  /**
+   * For debugging, output the image analysis result to the output directory.
+   */
+  outputResult(fileName, data) {
+    const now = moment().format('YYYYMMDD_HHmmss');
+    File.write(`${global.APP_DIR}/output/${fileName}_${now}.json`, JSON.stringify(data, null, 2));
   }
 }

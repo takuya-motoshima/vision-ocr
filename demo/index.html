@@ -9,45 +9,47 @@
   <link rel="stylesheet" href="node_modules/pure-css-loader/dist/css-loader.css">
   <link rel="stylesheet" href="node_modules/highlightjs/styles/zenburn.css">
   <!-- <link rel="stylesheet" href="node_modules/highlightjs/styles/xcode.css"> -->
-  <link rel="stylesheet" type="text/css" href="index.css?202106031104">
+  <link rel="stylesheet" type="text/css" href="index.css?202106031702">
 </head>
 <body>
   <div class="container-fluid my-4">
-    <h1>Analyze your insurance card or driver's license.</h1>
+    <h1 class="text-primary">Analyze your insurance card or driver's license.</h1>
     <p style="font-size: calc(1.275rem + .3vw); font-weight: 300;">This is a demonstration of performing insurance card number masks, driver's license number check digits, etc. with Google Vision.</p>
 
     <div class="row">
-      <div class="col-md-7">
+      <div class="col-md-8">
         <div class="my-4">
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="type" id="typeMaskInsuranceCard" value="MASK_INSURANCE_CARD" checked>
-            <label class="form-check-label" for="typeMaskInsuranceCard">Mask insurance card</label>
+            <label class="form-check-label h4" for="typeMaskInsuranceCard">Mask insurance card</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="type" id="typeCheckLicenseNumber" value="CHECK_LICENSE_NUMBER">
-            <label class="form-check-label" for="typeCheckLicenseNumber">Check license number</label>
+            <label class="form-check-label h4" for="typeCheckLicenseNumber">Check license number</label>
           </div>
         </div>
-        <div class="holder">
-          <canvas class="canvas" id="canvas"></canvas>
+        <div class="holder-wrapper">
+          <div class="holder">
+            <canvas class="canvas" id="canvas"></canvas>
+          </div>
         </div>
         <div class="tools py-3 px-2">
           <div class="img-list-conteiner">
             <h6>Select sample image</h6>
             <div class="img-list-scrollable">
-              <ul id="imgs" class="img-list">
-                <!-- <li class="img active"><img src="images/license1.jpg"></li>
-                <li><img src="images/license1_15degree.jpg"></li>
-                <li><img src="images/license1_30degree.jpg"></li>
-                <li><img src="images/license1_45degree.jpg"></li>
-                <li><img src="images/license2.jpg"></li>
-                <li><img src="images/license3.jpg"></li>
-                <li><img src="images/license4.jpg"></li>
-                <li><img src="images/license5.jpg"></li>
-                <li><img src="images/license6.jpg"></li> -->
-                <li class="active"><img src="images/insurance1.jpg"></li>
-                <li><img src="images/insurance2.png"></li>
-                <li><img src="images/insurance3.png"></li>
+              <ul id="imgs" class="img-list" type="insurance">
+                <li class="insurance active"><img src="images/insurance1.jpg"></li>
+                <li class="insurance"><img src="images/insurance2.png"></li>
+                <li class="insurance"><img src="images/insurance3.png"></li>
+                <li class="license"><img src="images/license1.jpg"></li>
+                <li class="license"><img src="images/license1_15degree.jpg"></li>
+                <li class="license"><img src="images/license1_30degree.jpg"></li>
+                <li class="license"><img src="images/license1_45degree.jpg"></li>
+                <li class="license"><img src="images/license2.jpg"></li>
+                <li class="license"><img src="images/license3.jpg"></li>
+                <li class="license"><img src="images/license4.jpg"></li>
+                <li class="license"><img src="images/license5.jpg"></li>
+                <li class="license"><img src="images/license6.jpg"></li>
               </ul>
             </div>
           </div>
@@ -62,43 +64,9 @@
           </div>
         </div>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-4">
         <h3>The result of the analysis.</h3>
-        <pre><code id="result" class="json">{
-  &quot;textAnnotations&quot;: [
-    {
-      &quot;locations&quot;: [],
-      &quot;properties&quot;: [],
-      &quot;mid&quot;: &quot;&quot;,
-      &quot;locale&quot;: &quot;ja&quot;,
-      &quot;description&quot;: &quot;健康保険\n被保険者証\n本人(被保険者)\n00年 00月00日 交付\n記号 000\n番号0000000\n氏名 **\n**\nOVO\n性別 *\n00月 00日\n00月 00日\n生年月日\n00年\n回E\n認定年月日\n00年\n保険者所在地\n**県**市**町 000 番地\n保険者番号\n00000000\n8 000-000-0000\n保険者名称\n株式会社**健康保険組合\n&quot;,
-      &quot;score&quot;: 0,
-      &quot;confidence&quot;: 0,
-      &quot;topicality&quot;: 0,
-      &quot;boundingPoly&quot;: {
-        &quot;vertices&quot;: [
-          {
-            &quot;x&quot;: 102,
-            &quot;y&quot;: 72
-          },
-          {
-            &quot;x&quot;: 1729,
-            &quot;y&quot;: 72
-          },
-          {
-            &quot;x&quot;: 1729,
-            &quot;y&quot;: 1079
-          },
-          {
-            &quot;x&quot;: 102,
-            &quot;y&quot;: 1079
-          }
-        ],
-        &quot;normalizedVertices&quot;: []
-      }
-    },
-  ]
-}</code></pre>
+        <pre><code id="result" class="json"></code></pre>
       </div>
     </div>
   </div>
@@ -106,6 +74,7 @@
   <script src="node_modules/axios/dist/axios.min.js"></script>
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/highlightjs/highlight.pack.min.js"></script>
-  <script src="index.js?202106031104" type="module"></script>
+  <script src="node_modules/js-cookie/src/js.cookie.js"></script>
+  <script src="index.js?202106031702" type="module"></script>
 </body>
 </html>
