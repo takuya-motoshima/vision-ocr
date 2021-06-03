@@ -34,6 +34,21 @@ import * as config from './config.js';
         console.log('data=', data);
         result.text(JSON.stringify(data, null, 2));
         hljs.highlightBlock(result.get(0));
+
+        // Draw the license number boundaries.
+        if (data.boundingBox) {
+          const {leftTop, rightTop, rightBottom, leftBottom} = data.boundingBox;
+          const ctx = canvas.get(0).getContext('2d');
+          ctx.beginPath();
+          ctx.moveTo(leftTop.x, leftTop.y);
+          ctx.lineTo(rightTop.x, rightTop.y);
+          ctx.lineTo(rightBottom.x, rightBottom.y);
+          ctx.lineTo(leftBottom.x, leftBottom.y);
+          ctx.closePath();
+          ctx.lineWidth = 4;
+          ctx.strokeStyle = 'red';
+          ctx.stroke();
+        }
       }
     } catch(e) {
       alert('An unexpected error has occurred');

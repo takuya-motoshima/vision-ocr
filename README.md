@@ -2,11 +2,11 @@
 
 This is an OCR demo application using Google Cloud Vision.  
 
-Insurance card number mask demo:  
-<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencaps/drivers-license.png" width="500">
-
 Driver's license number check demo:  
-<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencaps/health-insurance-card.png" width="500">
+<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencaps/drivers-license.png" width="800">
+
+Insurance card number mask demo:  
+<img src="https://raw.githubusercontent.com/takuya-motoshima/vision-ocr/main/screencaps/health-insurance-card.png" width="800">
 
 ## Getting Started
 
