@@ -40,8 +40,10 @@ export default class {
     const canvas = createCanvas(tmpImg.width, tmpImg.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(tmpImg, 0, 0);
+    const boundingBoxes = [];
     for (let detection of detections) {
       const [leftTop, rightTop, rightBottom, leftBottom] = detection;
+      boundingBoxes.push({leftTop, rightTop, rightBottom, leftBottom});
       ctx.beginPath();
       ctx.moveTo(leftTop.x, leftTop.y);
       ctx.lineTo(rightTop.x, rightTop.y);
@@ -52,7 +54,10 @@ export default class {
       ctx.fillStyle = '#000';
       ctx.fill();
     }
-    return canvas.toDataURL(`image/${extension}`, 1);
+    const maskedImg = canvas.toDataURL(`image/${extension}`, 1);
+    console.log('maskedImg=', maskedImg.slice(0, 30));
+    console.log('boundingBoxes=', boundingBoxes);
+    return {maskedImg, boundingBoxes};
   }
 
   /**

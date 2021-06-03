@@ -24,14 +24,15 @@ import * as config from './config.js';
       if (types.filter(':checked').val() === 'MASK_INSURANCE_CARD') {
         // Request a health insurance card mask.
         const {data} = await request.post('maskInsuranceCard', {img: toDataURL(img)});
+        result.text(JSON.stringify(data.boundingBoxes, null, 2));
+        hljs.highlightBlock(result.get(0));
         const newImg = new Image();
-        newImg.src = data;
+        newImg.src = data.maskedImg;
         await graphicjs.awaitMediaLoaded(newImg);
         drawCanvas(newImg);
       } else {
         // Request verification of license number.
         const {data}= await request.post('checkLicenceNumber', {img: toDataURL(img)});
-        console.log('data=', data);
         result.text(JSON.stringify(data, null, 2));
         hljs.highlightBlock(result.get(0));
 
@@ -83,7 +84,7 @@ import * as config from './config.js';
   const canvas = $('#canvas');
   const loader = $('#loader');
   const imgs = $('#imgs');
-  const request = axios.create({baseURL: config.baseUrl, timeout: 5000});
+  const request = axios.create({baseURL: config.baseUrl, timeout: 10000});
   const result = $('#result');
   const types = $('[type="radio"][name="type"]');
 
