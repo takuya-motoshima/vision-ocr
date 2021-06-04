@@ -1,3 +1,5 @@
+import {File} from 'nodejs-shared';
+
 /**
  * Convert image to data URL.
  */

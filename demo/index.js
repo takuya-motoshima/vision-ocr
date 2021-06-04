@@ -1,5 +1,6 @@
 import graphicjs from './node_modules/graphicjs/dist/build.esm.js';
 import * as config from './config.js';
+import scissor from './node_modules/js-scissor/dist/build.esm.js';
 
 (async () => {
   /**
@@ -85,7 +86,7 @@ import * as config from './config.js';
   const canvas = $('#canvas');
   const loader = $('#loader');
   const imgs = $('#imgs');
-  const request = axios.create({baseURL: config.baseUrl, timeout: 10000});
+  const request = axios.create({baseURL: config.baseUrl, timeout: 60000});
   const result = $('#result');
   const types = $('[type="radio"][name="type"]');
 
@@ -108,10 +109,15 @@ import * as config from './config.js';
       $(reader).on('load', () => resolve(reader.result));
     });
     inputFile.val('');
-    const img = new Image();
+    let img = new Image();
     img.src = dataUrl;
     if (!img.complete)
       await new Promise(resolve => $(img).on('load', resolve));
+    if (img.naturalWidth > 1024) {
+      img = scissor(img).resize(1024).toImage();
+      if (!img.complete)
+        await new Promise(resolve => $(img).on('load', resolve));
+    }
     drawCanvas(img);
     send(img);
   });

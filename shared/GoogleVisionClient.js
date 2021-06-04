@@ -20,44 +20,49 @@ export default class {
    * Mask the personal information on your health insurance card.
    */
   async maskInsuranceCard(img) {
-    // Get file extension.
-    const extension = Helper.getExtension(img);
+    try {
+      // Get file extension.
+      const extension = Helper.getExtension(img);
 
-    // Convert image to data URL.
-    img = Helper.convertImageToDataURL(img);
+      // Convert image to data URL.
+      img = Helper.convertImageToDataURL(img);
 
-    // Create a temporary image file.
-    const tmpPath = File.getTmpPath(`.${extension}`);
-    File.write(tmpPath, img, 'base64');
-    const tmpImg = await loadImage(tmpPath);
+      // Create a temporary image file.
+      const tmpPath = File.getTmpPath(`.${extension}`);
+      File.write(tmpPath, img, 'base64');
+      const tmpImg = await loadImage(tmpPath);
 
-    // Detect text.
-    const detections = [];
-    await this.detectInsurerNumber(tmpPath, detections);
-    await this.detectInsurerQrCode(tmpPath, tmpImg.width, tmpImg.height, detections);
+      // Detect text.
+      const detections = [];
+      await this.detectInsurerNumber(tmpPath, detections);
+      await this.detectInsurerQrCode(tmpPath, tmpImg.width, tmpImg.height, detections);
 
-    // Mask text.
-    const canvas = createCanvas(tmpImg.width, tmpImg.height);
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(tmpImg, 0, 0);
-    const boundingBoxes = [];
-    for (let detection of detections) {
-      const [leftTop, rightTop, rightBottom, leftBottom] = detection;
-      boundingBoxes.push({leftTop, rightTop, rightBottom, leftBottom});
-      ctx.beginPath();
-      ctx.moveTo(leftTop.x, leftTop.y);
-      ctx.lineTo(rightTop.x, rightTop.y);
-      ctx.lineTo(rightBottom.x, rightBottom.y);
-      ctx.lineTo(leftBottom.x, leftBottom.y);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.fillStyle = '#000';
-      ctx.fill();
+      // Mask text.
+      const canvas = createCanvas(tmpImg.width, tmpImg.height);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(tmpImg, 0, 0);
+      const boundingBoxes = [];
+      for (let detection of detections) {
+        const [leftTop, rightTop, rightBottom, leftBottom] = detection;
+        boundingBoxes.push({leftTop, rightTop, rightBottom, leftBottom});
+        ctx.beginPath();
+        ctx.moveTo(leftTop.x, leftTop.y);
+        ctx.lineTo(rightTop.x, rightTop.y);
+        ctx.lineTo(rightBottom.x, rightBottom.y);
+        ctx.lineTo(leftBottom.x, leftBottom.y);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillStyle = '#000';
+        ctx.fill();
+      }
+      const maskedImg = canvas.toDataURL(`image/${extension}`, 1);
+      console.log('maskedImg=', maskedImg.slice(0, 30));
+      console.log('boundingBoxes=', boundingBoxes);
+      return {maskedImg, boundingBoxes};      
+    } catch (e) {
+      console.error('Health insurance card mask error. Error: ', e);
+      throw e;
     }
-    const maskedImg = canvas.toDataURL(`image/${extension}`, 1);
-    console.log('maskedImg=', maskedImg.slice(0, 30));
-    console.log('boundingBoxes=', boundingBoxes);
-    return {maskedImg, boundingBoxes};
   }
 
   /**
@@ -131,48 +136,53 @@ export default class {
    * Check digit your license number.
    */
   async checkLicenseNumber(img) {
-    // Get file extension.
-    const extension = Helper.getExtension(img);
+    try {
+      // Get file extension.
+      const extension = Helper.getExtension(img);
 
-    // Convert image to data URL.
-    img = Helper.convertImageToDataURL(img);
+      // Convert image to data URL.
+      img = Helper.convertImageToDataURL(img);
 
-    // Create a temporary image file.
-    const tmpPath = File.getTmpPath(`.${extension}`);
-    File.write(tmpPath, img, 'base64');
-    const tmpImg = await loadImage(tmpPath);
+      // Create a temporary image file.
+      const tmpPath = File.getTmpPath(`.${extension}`);
+      File.write(tmpPath, img, 'base64');
+      const tmpImg = await loadImage(tmpPath);
 
-    // Analyze the document.
-    const [result] = await this.client.documentTextDetection(tmpPath);
-    this.outputResult('license', result.textAnnotations);
+      // Analyze the document.
+      const [result] = await this.client.documentTextDetection(tmpPath);
+      this.outputResult('license', result.textAnnotations);
 
-    // Check your license number.
-    let isDriversLicense = false;
-    let driversLicenseNumber = null;
-    let boundingBox = null;
-    let checkDigitResult = false;
-    if (result.textAnnotations.length) {
-      isDriversLicense = result.textAnnotations[0].description.indexOf('免許証') !== -1;
-      // isDriversLicense = result.textAnnotations[0].description.indexOf('運転免許証') !== -1;
-      if (isDriversLicense) {
-        const annotations = result.textAnnotations.slice(1) || [];
-        for (let {description, boundingPoly} of annotations) {
-          const matches = /\d{12}/.exec(description);
-          if (!matches) continue;
-          driversLicenseNumber = matches[0];
+      // Check your license number.
+      let isDriversLicense = false;
+      let driversLicenseNumber = null;
+      let boundingBox = null;
+      let checkDigitResult = false;
+      if (result.textAnnotations.length) {
+        isDriversLicense = result.textAnnotations[0].description.indexOf('免許証') !== -1;
+        // isDriversLicense = result.textAnnotations[0].description.indexOf('運転免許証') !== -1;
+        if (isDriversLicense) {
+          const annotations = result.textAnnotations.slice(1) || [];
+          for (let {description, boundingPoly} of annotations) {
+            const matches = /\d{12}/.exec(description);
+            if (!matches) continue;
+            driversLicenseNumber = matches[0];
 
-          // Calculate the license number check digit.
-          const digit = this.calcLicenseNumberCheckDigit(driversLicenseNumber);
-          checkDigitResult = driversLicenseNumber.toString().slice(10, 11) == digit;
+            // Calculate the license number check digit.
+            const digit = this.calcLicenseNumberCheckDigit(driversLicenseNumber);
+            checkDigitResult = driversLicenseNumber.toString().slice(10, 11) == digit;
 
-          // License number bounding box.
-          const [leftTop, rightTop, rightBottom, leftBottom] = boundingPoly.vertices;
-          boundingBox = {leftTop, rightTop, rightBottom, leftBottom};
-          break;
+            // License number bounding box.
+            const [leftTop, rightTop, rightBottom, leftBottom] = boundingPoly.vertices;
+            boundingBox = {leftTop, rightTop, rightBottom, leftBottom};
+            break;
+          }
         }
       }
+      return {isDriversLicense, driversLicenseNumber, checkDigitResult, boundingBox};
+    } catch (e) {
+      console.error('License number check error. Error: ', e);
+      throw e;
     }
-    return {isDriversLicense, driversLicenseNumber, checkDigitResult, boundingBox};
   }
 
   /**
