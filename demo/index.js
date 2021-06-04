@@ -33,6 +33,7 @@ import * as config from './config.js';
       } else {
         // Request verification of license number.
         const {data}= await request.post('checkLicenceNumber', {img: toDataURL(img)});
+        console.log('data=', data);
         result.text(JSON.stringify(data, null, 2));
         hljs.highlightBlock(result.get(0));
 
