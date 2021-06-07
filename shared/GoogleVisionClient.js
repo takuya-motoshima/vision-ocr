@@ -158,7 +158,8 @@ export default class {
       let boundingBox = null;
       let checkDigitResult = false;
       if (result.textAnnotations.length) {
-        isDriversLicense = result.textAnnotations[0].description.indexOf('免許証') !== -1;
+        isDriversLicense = result.textAnnotations[0].description.indexOf('免許') !== -1;
+        // isDriversLicense = result.textAnnotations[0].description.indexOf('免許証') !== -1;
         // isDriversLicense = result.textAnnotations[0].description.indexOf('運転免許証') !== -1;
         if (isDriversLicense) {
           const annotations = result.textAnnotations.slice(1) || [];
