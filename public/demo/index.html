@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
+  <title>Analyze your insurance card or driver's license.</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="node_modules/pure-css-loader/dist/css-loader.css">
+  <link rel="stylesheet" href="node_modules/highlightjs/styles/zenburn.css">
+  <!-- <link rel="stylesheet" href="node_modules/highlightjs/styles/xcode.css"> -->
+  <link rel="stylesheet" type="text/css" href="index.css?202106041620">
+</head>
+<body>
+  <div class="container-fluid my-4">
+    <h1 class="text-primary ">Mask demo</h1>
+    <p style="font-size: calc(1.15rem + .3vw); font-weight: 300;">You can try the insurance card number mask and the driver's license number check digit.</p>
+
+    <div class="row">
+      <div class="col-md-12">
+      <!-- <div class="col-md-8"> -->
+        <div class="my-4">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="type" id="typeCheckLicenseNumber" value="CHECK_LICENSE_NUMBER" checked>
+            <label class="form-check-label h4" for="typeCheckLicenseNumber">Check license number</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="type" id="typeMaskInsuranceCard" value="MASK_INSURANCE_CARD">
+            <label class="form-check-label h4" for="typeMaskInsuranceCard">Mask insurance card</label>
+          </div>
+        </div>
+        <div class="holder-wrapper">
+          <div class="holder">
+            <canvas class="canvas" id="canvas"></canvas>
+          </div>
+        </div>
+        <div class="tools py-3 px-2">
+          <div class="img-list-conteiner">
+            <h6>Select sample image</h6>
+            <div class="img-list-scrollable">
+              <ul id="imgs" class="img-list" type="license">
+                <li class="insurance"><img src="images/insurance1.jpg"></li>
+                <li class="insurance"><img src="images/insurance2.png"></li>
+                <li class="insurance"><img src="images/insurance3.png"></li>
+                <li class="license active"><img src="images/license1.jpg"></li>
+                <li class="license"><img src="images/license1_15degree.jpg"></li>
+                <li class="license"><img src="images/license1_30degree.jpg"></li>
+                <li class="license"><img src="images/license1_45degree.jpg"></li>
+                <li class="license"><img src="images/license2.jpg"></li>
+                <li class="license"><img src="images/license3.jpg"></li>
+                <li class="license"><img src="images/license4.jpg"></li>
+                <li class="license"><img src="images/license5.jpg"></li>
+                <li class="license"><img src="images/license6.jpg"></li>
+              </ul>
+            </div>
+          </div>
+          <div class="vertical-border"></div>
+          <div>
+            <h6>You'r image</h6>
+            <label>
+              <span class="btn btn-primary">
+                <i class="bi-upload me-2"></i>Upload<input on-upload type="file" class="d-none" accept="image/*">
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-none">
+        <h3>The result of the analysis.</h3>
+        <pre><code id="result" class="json"></code></pre>
+      </div>
+    </div>
+  </div>
+  <div id="loader" class="loader loader-default is-active" data-text></div>
+  <script src="node_modules/axios/dist/axios.min.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/highlightjs/highlight.pack.min.js"></script>
+  <script src="node_modules/js-cookie/src/js.cookie.js"></script>
+  <script src="index.js?202106041620" type="module"></script>
+</body>
+</html>

@@ -13,8 +13,8 @@
 </head>
 <body>
   <div class="container-fluid my-4">
-    <h1 class="text-primary">Analyze your insurance card or driver's license.</h1>
-    <p style="font-size: calc(1.15rem + .3vw); font-weight: 300;">This is a demonstration of performing insurance card number masks, driver's license number check digits, etc. with Google Vision.</p>
+    <h1 class="text-primary">Mask demo</h1>
+    <p style="font-size: calc(1.15rem + .3vw); font-weight: 300;">You can try the insurance card number mask and the driver's license number check digit.</p>
 
     <div class="row">
       <div class="col-md-8">
