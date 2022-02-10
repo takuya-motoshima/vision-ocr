@@ -2,7 +2,7 @@ node_modules/
 package-lock.json
 credentials.json
 !credentials.json.sample
-demo/config.js
-!demo/config.js.sample
+public/demo/config.js
+!public/demo/config.js.sample
 !output
 output/*
